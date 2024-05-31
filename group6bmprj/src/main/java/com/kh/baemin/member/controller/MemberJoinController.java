@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import com.kh.baemin.member.service.MemberService;
+import com.kh.baemin.member.vo.MemberVo;
 
 @WebServlet("/member/join")
 @MultipartConfig(
@@ -40,17 +42,19 @@ public class MemberJoinController extends HttpServlet {
             String addressdDetail = req.getParameter("addressdDetail");
             String generation = req.getParameter("generation");
             String gender = req.getParameter("gender");
-            Part profile = req.getPart("f"); // "profile" 파라미터로 업로드된 파일을 Part 객체로 받음
+            Part memberImg = req.getPart("f"); // "profile" 파라미터로 업로드된 파일을 Part 객체로 받음
 
             String changeName = ""; // 파일 이름 변경을 위한 변수 초기화
 
             // 파일이 업로드된 경우
-            if (profile.getSize() > 0) {
+            if (memberImg.getSize() > 0) {
                 // 파일을 서버에 저장하기
-                String originFileName = profile.getSubmittedFileName(); // 원본 파일 이름을 가져옴
-                InputStream is = profile.getInputStream(); // 파일의 입력 스트림을 가져옴
-
-                String path = "C:\\dev\\servletWorkspace\\baeminproject\\src\\main\\webapp\\resources\\upload\\"; // 파일 저장 경로
+                String originFileName = memberImg.getSubmittedFileName(); // 원본 파일 이름을 가져옴
+                InputStream is = memberImg.getInputStream(); // 파일의 입력 스트림을 가져옴
+                
+                ServletContext context = getServletContext();
+                String path = context.getRealPath("/resources/upload/"); 
+                
                 java.io.File dir = new java.io.File(path); // 파일 저장 경로의 디렉토리 객체 생성
                 if (!dir.exists()) {
                     dir.mkdirs(); // 디렉토리가 존재하지 않으면 생성
@@ -83,7 +87,7 @@ public class MemberJoinController extends HttpServlet {
             vo.setAddressdDetail(addressdDetail);
             vo.setGeneration(generation);
             vo.setGender(gender);
-            vo.setProfile(changeName);
+            vo.setMemberImg(changeName);
 
             MemberService ms = new MemberService();
             
@@ -91,10 +95,10 @@ public class MemberJoinController extends HttpServlet {
 
             if (result == 1) {
                 req.setAttribute("resultMsg", "회원가입 성공 !!!");
-                resp.sendRedirect("/app/member/login");
+                resp.sendRedirect("/baemin/member/login");
             } else {
                 req.setAttribute("resultMsg", "회원가입 실패 ...");
-              resp.sendRedirect("/app/member/join");
+              resp.sendRedirect("/baemin/member/join");
             }
         } catch (Exception e) {
             System.out.println("[ERROR-M0001] " + e.getMessage());

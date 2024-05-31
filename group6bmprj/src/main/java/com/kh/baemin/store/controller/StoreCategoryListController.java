@@ -8,9 +8,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.kh.baemin.member.vo.MemberVo;
 import com.kh.baemin.store.service.StoreMenuService;
 import com.kh.baemin.store.vo.CategoryVo;
+import com.kh.baemin.store.vo.FoodInforVo;
+import com.kh.baemin.store.vo.StoreOwnerVo;
 
 @WebServlet("/store/category_list")
 public class StoreCategoryListController extends HttpServlet{
@@ -21,6 +25,10 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 	
 	try {
 		// TODO StoreNo
+		HttpSession session = req.getSession();
+	MemberVo loginStoreMemberVo = (StoreOwnerVo) session.getAttribute("loginStoreMemberVo");
+		session.setAttribute(, );
+	
 		
 		CategoryVo vo = new CategoryVo();
 	
@@ -30,6 +38,12 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 		StoreMenuService sms=new StoreMenuService();
 		List<CategoryVo> categoryVolist=sms.selectCategoryList(storeNo);
 		req.setAttribute("categoryVolist", categoryVolist);
+		
+		StoreMenuService service = new StoreMenuService();
+		List<FoodInforVo> menuVolist = service.selectMenuList(storeNo);
+		System.out.println("전체 메뉴조회 해오기:" + menuVolist);
+		req.setAttribute("foodMenuInforVolist", menuVolist);
+		
 		req.getRequestDispatcher("/WEB-INF/views/store/menu_edit.jsp").forward(req, resp);
 	
 	} catch (Exception e) {
