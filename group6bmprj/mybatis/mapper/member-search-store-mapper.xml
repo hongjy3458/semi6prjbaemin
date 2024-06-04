@@ -86,7 +86,7 @@
 					,S.APPROVAL_STATUS_NO
 					,S.OPEN_YN
 					,F.FOOD_IMG
-					,RANK() OVER (ORDER BY S.no,F.NO DESC)    AS  RK 
+					,RANK() OVER (PARTITION BY S.no ORDER BY F.NO DESC)    AS  RK 
 					FROM STORE_INFOR S 
 					JOIN FOOD_INFOR F                  ON F.STORE_NO = S.NO
 					LEFT JOIN CLOSED_DAY C             ON S.NO    =   C.STORE_NO

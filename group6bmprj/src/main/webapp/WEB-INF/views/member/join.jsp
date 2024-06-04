@@ -36,14 +36,13 @@
 
 <body>
     <div class="content">
-        <header>
-       <div class="left-bar"><img class = "back-img" src="/baemin/resources/img/상단바_뒤로가기.jpg" onclick="history.back()"></div>
-
-           <div class="middle-bar"> <img class="top-bar-name" src="/배민캡쳐/상단바_현재페이지이름_가게배달.jpg"> </div>
-         <img  class="right-bar" src="/baemin/resources/img/홈.png" onclick="location.href='/baemin/member/home'">
+      <header>
+           <div class="left-bar"><img class = "back-img" src="/baemin/resources/img/상단바_뒤로가기.jpg" onclick="history.back()"></div>
+          
+                <div class="left-bar">
+           
           </div>
-   
-          <div class="middle">주소입력칸&nbsp&nbsp&nbsp▽</div>
+          <div class="middle"></div>
           <!-- <div class="bottom"><button>standardard</button><button>star☆</button></div> -->
         </header>
         <main>

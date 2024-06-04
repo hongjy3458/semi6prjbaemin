@@ -38,10 +38,10 @@
 				<div class="store-name">${memberViewStoreInforVo.name}</div>
 				<!-- 평균별점 사진, 글-->
 				<div class="star">
-					<span>⭐⭐⭐</span><span>3.5???</span>
+					<span>⭐⭐⭐</span><span>3</span>
 				</div>
 				<!-- 리뷰 총 갯수 -->
-				<div class="review-count">총 리뷰갯수: ???</div>
+				<div class="review-count">총 리뷰갯수:3</div>
 				<!-- 찜하기 -->
 				<div class="heart">🤍💛💗</div>
 				<!-- 배달정보 -->
@@ -83,7 +83,7 @@
 						var="storeOfFoodCategoryVo">
 						<div class="categoryList">
 							<!--카테고리리스트 안은 2개로 나눔 categoryName,category-foodContentList로 나뉜다 한개의 카테고르이름안에 여러개의 내용들이 오기때문 -->
-							<div class="categoryName">카테고리자리${storeOfFoodCategoryVo.name}</div>
+							<div class="categoryName">${storeOfFoodCategoryVo.name}</div>
 
 
 							<c:forEach items="${storeOfFoodCategoryVo.foodInforVoList}"
@@ -168,8 +168,8 @@
 						</div>
 
 						<div class="businessInfor-right">
-							<p>??</p>
-							<p>??</p>
+							<p></p>
+							<p></p>
 
 
 						</div>

@@ -135,7 +135,7 @@
                 <li><a href="">매출관리</a></li>
                 <li><a href="">리뷰관리</a></li>
                 <li><a href="">
-               <button onclick=""location.href='/baemin/StoreOwner/logout'">로그아웃</button>
+               <button >로그아웃</button>
 
             </ul>
         </nav>

@@ -67,6 +67,7 @@ bottom:1px;
 display: grid;
 grid-template-columns: repeat(5,1fr);
 background-color: white;
+
 }
 
 
@@ -93,6 +94,7 @@ height: 30px;
 }
 
 footer div{
+	
   display: grid;
   grid-template-columns: 3fr lfr;
 }
@@ -117,7 +119,7 @@ main{
       /* display: grid;
       grid-template-rows: 4fr 1fr 0.8fr 1fr 3fr 2fr ; */
 
-      height: 755px;
+      height: 90vh;
 
    
       overflow-y: scroll;

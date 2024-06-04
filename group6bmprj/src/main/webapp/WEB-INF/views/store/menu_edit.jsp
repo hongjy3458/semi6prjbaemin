@@ -44,7 +44,7 @@
 					method="post">
 					<input type="hidden" name="categoryNoText"
 						id="submitCategoryNoText">
-					<button type="button" onclick="showSelectionEdit()">선택</button>
+					<button type="button" onclick="showSelectionEdit()">선택수정</button>
 					<td class="menu"><button type="submit" class="delete-Button"
 							onclick="showSelectionDelete()">선택삭제</button></td>
 				</form>
