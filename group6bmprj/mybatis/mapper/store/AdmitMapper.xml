@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="StoreAdminMapper">
+
+	<update id="update">
+		UPDATE STORE_INFOR
+			SET 
+		    NAME = #{name},
+		    ADDRESS = #{address},
+		    ADDRESS_DETAIL = #{addressDetail},
+		    STORE_CATEGORY_NO = #{storeCategoryNo},
+		    COMPANY_RESTRATION_NUMBER = #{companyRegistrationNumber},
+		    BUSINESS_REGISTRATION_CERTIFICATE_IMG = #{businessRegistrationCertificateImg}
+		WHERE
+  		 NO = #{no}
+	</update>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

@@ -25,8 +25,12 @@ public class StoreCategoryAddController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		try {
+			HttpSession session = req.getSession();
 			
-			//TODO StoreNo
+			//세션에서 가게넘버 빼자
+			String storeNo=(String) session.getAttribute("storeNo");
+		
+			
 			String name=req.getParameter("name");
 			String viewYn=req.getParameter("viewYn");
 	
@@ -34,8 +38,9 @@ public class StoreCategoryAddController extends HttpServlet {
 			CategoryVo vo=new CategoryVo();
 			vo.setName(name);
 			vo.setViewYn(viewYn);
+			
 			//TODO StoreNo
-			vo.setStoreNo("1");
+			vo.setStoreNo("4");
 
 			 StoreMenuService sms=new  StoreMenuService();;
 			int result=sms.categoryAdd(vo);
@@ -45,7 +50,7 @@ public class StoreCategoryAddController extends HttpServlet {
 			}else {
 				req.setAttribute("resultMsg", "카테고리 추가 실패!ㅜㅜ");
 			}
-			resp.sendRedirect("/app/store/category_list");
+			resp.sendRedirect("/baemin/store/category_list");
 			
 		}
 		catch(Exception e){

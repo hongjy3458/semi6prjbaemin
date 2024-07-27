@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import com.kh.baemin.member.service.MemberService;
+import com.kh.baemin.member.vo.MemberVo;
 
 @WebServlet("/member/join")
 @MultipartConfig(
@@ -25,6 +27,7 @@ public class MemberJoinController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    	System.out.println("test");
         req.getRequestDispatcher("/WEB-INF/views/member/join.jsp").forward(req, resp);
     }
 
@@ -37,20 +40,22 @@ public class MemberJoinController extends HttpServlet {
             String nick = req.getParameter("nick");
             String phone = req.getParameter("phone");
             String address= req.getParameter("address");
-            String addressdDetail = req.getParameter("addressdDetail");
+            String addressDetail = req.getParameter("addressDetail");
             String generation = req.getParameter("generation");
             String gender = req.getParameter("gender");
-            Part profile = req.getPart("f"); // "profile" 파라미터로 업로드된 파일을 Part 객체로 받음
+            Part memberImg = req.getPart("f"); // "profile" 파라미터로 업로드된 파일을 Part 객체로 받음
 
             String changeName = ""; // 파일 이름 변경을 위한 변수 초기화
 
             // 파일이 업로드된 경우
-            if (profile.getSize() > 0) {
+            if (memberImg.getSize() > 0) {
                 // 파일을 서버에 저장하기
-                String originFileName = profile.getSubmittedFileName(); // 원본 파일 이름을 가져옴
-                InputStream is = profile.getInputStream(); // 파일의 입력 스트림을 가져옴
-
-                String path = "C:\\dev\\servletWorkspace\\baeminproject\\src\\main\\webapp\\resources\\upload\\"; // 파일 저장 경로
+                String originFileName = memberImg.getSubmittedFileName(); // 원본 파일 이름을 가져옴
+                InputStream is = memberImg.getInputStream(); // 파일의 입력 스트림을 가져옴
+                
+                ServletContext context = getServletContext();
+                String path = context.getRealPath("/baemin/resources/upload/"); 
+                
                 java.io.File dir = new java.io.File(path); // 파일 저장 경로의 디렉토리 객체 생성
                 if (!dir.exists()) {
                     dir.mkdirs(); // 디렉토리가 존재하지 않으면 생성
@@ -60,7 +65,7 @@ public class MemberJoinController extends HttpServlet {
                 String ext = originFileName.substring(originFileName.lastIndexOf(".")); // 파일 확장자를 가져옴
                 changeName = System.currentTimeMillis() + "_" + random + ext; // 현재 시간과 랜덤 문자열을 조합하여 고유한 파일 이름 생성
                 FileOutputStream fos = new FileOutputStream(path + changeName); // 파일 저장을 위한 출력 스트림 생성
-
+                System.out.println(path + changeName);
                 byte[] buf = new byte[1024]; // 파일을 읽고 쓰기 위한 버퍼 생성
                 int size = 0;
                 while ((size = is.read(buf)) != -1) { // 입력 스트림에서 데이터를 읽어 버퍼에 저장
@@ -80,21 +85,22 @@ public class MemberJoinController extends HttpServlet {
             vo.setNick(nick);
             vo.setPhone(phone);
             vo.setAddress(address);
-            vo.setAddressdDetail(addressdDetail);
+            vo.setAddressDetail(addressDetail);
             vo.setGeneration(generation);
             vo.setGender(gender);
-            vo.setProfile(changeName);
+            vo.setMemberImg(changeName);
 
             MemberService ms = new MemberService();
             
             int result = ms.join(vo);
 
             if (result == 1) {
+            	
                 req.setAttribute("resultMsg", "회원가입 성공 !!!");
-                resp.sendRedirect("/app/member/login");
+                resp.sendRedirect("/baemin/member/login");
             } else {
                 req.setAttribute("resultMsg", "회원가입 실패 ...");
-              resp.sendRedirect("/app/member/join");
+              resp.sendRedirect("/baemin/member/join");
             }
         } catch (Exception e) {
             System.out.println("[ERROR-M0001] " + e.getMessage());

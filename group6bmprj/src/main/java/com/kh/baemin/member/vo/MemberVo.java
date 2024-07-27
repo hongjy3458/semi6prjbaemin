@@ -9,19 +9,21 @@ public class MemberVo {
 	private String pwd;
 	private String name;
 	private String address;
-	private String addressdDetail;
+	private String addressDetail;
 	private String phone;
 	private String accountBalance;
 	private String delYn;
 	private String gender;
-	private String profile;
+	private String memberImg;
 	private String generation;
+	private String chargeAmount;
 	public MemberVo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public MemberVo(String no, String nick, String id, String pwd, String name, String address, String addressdDetail,
-			String phone, String accountBalance, String delYn, String gender, String profile, String generation) {
+	public MemberVo(String no, String nick, String id, String pwd, String name, String address, String addressDetail,
+			String phone, String accountBalance, String delYn, String gender, String memberImg, String generation,
+			String chargeAmount) {
 		super();
 		this.no = no;
 		this.nick = nick;
@@ -29,20 +31,21 @@ public class MemberVo {
 		this.pwd = pwd;
 		this.name = name;
 		this.address = address;
-		this.addressdDetail = addressdDetail;
+		this.addressDetail = addressDetail;
 		this.phone = phone;
 		this.accountBalance = accountBalance;
 		this.delYn = delYn;
 		this.gender = gender;
-		this.profile = profile;
+		this.memberImg = memberImg;
 		this.generation = generation;
+		this.chargeAmount = chargeAmount;
 	}
 	@Override
 	public String toString() {
 		return "MemberVo [no=" + no + ", nick=" + nick + ", id=" + id + ", pwd=" + pwd + ", name=" + name + ", address="
-				+ address + ", addressdDetail=" + addressdDetail + ", phone=" + phone + ", accountBalance="
-				+ accountBalance + ", delYn=" + delYn + ", gender=" + gender + ", profile=" + profile + ", generation="
-				+ generation + "]";
+				+ address + ", addressDetail=" + addressDetail + ", phone=" + phone + ", accountBalance="
+				+ accountBalance + ", delYn=" + delYn + ", gender=" + gender + ", memberImg=" + memberImg
+				+ ", generation=" + generation + ", chargeAmount=" + chargeAmount + "]";
 	}
 	public String getNo() {
 		return no;
@@ -80,11 +83,11 @@ public class MemberVo {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getAddressdDetail() {
-		return addressdDetail;
+	public String getAddressDetail() {
+		return addressDetail;
 	}
-	public void setAddressdDetail(String addressdDetail) {
-		this.addressdDetail = addressdDetail;
+	public void setAddressDetail(String addressDetail) {
+		this.addressDetail = addressDetail;
 	}
 	public String getPhone() {
 		return phone;
@@ -110,11 +113,11 @@ public class MemberVo {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public String getProfile() {
-		return profile;
+	public String getMemberImg() {
+		return memberImg;
 	}
-	public void setProfile(String profile) {
-		this.profile = profile;
+	public void setMemberImg(String memberImg) {
+		this.memberImg = memberImg;
 	}
 	public String getGeneration() {
 		return generation;
@@ -122,5 +125,10 @@ public class MemberVo {
 	public void setGeneration(String generation) {
 		this.generation = generation;
 	}
-
+	public String getChargeAmount() {
+		return chargeAmount;
+	}
+	public void setChargeAmount(String chargeAmount) {
+		this.chargeAmount = chargeAmount;
+	}
 }

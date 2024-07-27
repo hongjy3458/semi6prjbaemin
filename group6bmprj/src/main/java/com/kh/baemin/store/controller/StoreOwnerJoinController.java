@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.MultipartConfig;
@@ -51,7 +52,14 @@ public class StoreOwnerJoinController extends HttpServlet{
 			String originFileName=profile.getSubmittedFileName();
 			InputStream is=profile.getInputStream();
 			
-			String path="D:\\dev\\servletWorkspace\\baemin\\src\\main\\webapp\\resources\\upload\\";
+//			String path="D:\\dev\\servletWorkspace\\baemin\\src\\main\\webapp\\resources\\upload\\";
+			
+			// 조원끼리 사진저장하는 파일경로가 다르니까 이거 써주기 webapp 하위 resources부터는 맞춰주세요:)
+            ServletContext context = getServletContext();
+            String path = context.getRealPath("/resources/upload/");  // 웹 애플리케이션의 루트 경로를 동적으로 가져오기
+            System.out.println("context: " + context);
+            System.out.println("path:" + path);
+            
 			String random=UUID.randomUUID().toString();
 			String ext=originFileName.substring(originFileName.lastIndexOf("."));
 			changeName=System.currentTimeMillis()+"_"+random+ext;
@@ -81,20 +89,20 @@ public class StoreOwnerJoinController extends HttpServlet{
 		vo.setPhone(phone);
 		vo.setCompanyResitrationNumber(companyResitrationNumber);
 		vo.setProfile(changeName);
-		
+		System.out.println(changeName);
 		//서비스 호출
 		StoreOwnerService ss= new StoreOwnerService();
 		int result=ss.join(vo);
 		
 		//결과처리
 		if(result==1) {
-			req.setAttribute("resultMsg", "환영해요! 회원가입 성공했습니다 입점신청도 서둘러주세요! ");
+			req.setAttribute("resultMsg", "환영해요! 회원가입 성공했습니다! ");
 		}else {
 			req.setAttribute("resultMsg", "회원가입실패!");
 		}
 		
 	     // 현재 페이지로 포워드
-        req.getRequestDispatcher("WEB-INF/views/store/owner_join.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/store/owner_join.jsp").forward(req, resp);
 		
 	}catch(Exception e) {
 		e.printStackTrace();

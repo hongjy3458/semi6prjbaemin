@@ -2,11 +2,10 @@ package com.kh.baemin.store.service;
 
 import static com.kh.baemin.db.SqlSessionTemplate.getSqlSession;
 
-import java.util.List;
-
 import org.apache.ibatis.session.SqlSession;
 
-import com.kh.baemin.store.vo.StoreInforVo;
+import com.kh.baemin.store.dao.StoreAdmitDao;
+import com.kh.baemin.store.vo.StoreAdmitVo;
 
 public class StoreAdmitService {
 	
@@ -16,48 +15,40 @@ public class StoreAdmitService {
 		dao = new StoreAdmitDao();
 	}
 	
-	//ê²Œì‹œê¸€ ëª©ë¡ ì¡°íšŒ
-		public List<StoreInforVo> selectStoreInForList() throws Exception {
-			// ë¹„ì¦ˆë‹ˆìŠ¤ ë¡œì§
+		//Çã°¡ »óÅÂ Á¶È¸
+//		public List<StoreInforVo> selectStoreInForList() throws Exception {
+			// ºñÁî´Ï½º ·ÎÁ÷
 			
-			// DAO í˜¸ì¶œ
-			SqlSession ss = getSqlSession();
-			List<StoreInforVo> voList = dao.selectBoardList(ss , siv);
-			
-			ss.close();
-			
-			return voList;
-		}
+			// DAO È£Ãâ
+//			SqlSession ss = getSqlSession();
+//			List<StoreInforVo> voList = dao.selectBoardList(ss , siv);
+//			
+//			ss.close();
+//			
+//			return voList;
+//		}
 		
-		//í—ˆê°€ ì‹ ì²­í›„ ìˆ˜ì •
-		public int insert(StoreInforVo vo, List<StoreInforVoList> storeInforVoList) throws Exception {
+		//Çã°¡ ½ÅÃ»ÈÄ ¼öÁ¤
+		public int writeStoreInfor(StoreAdmitVo vo) throws Exception {
 			
-			// ë¹„ì¦ˆë‹ˆìŠ¤ ë¡œì§
-			if(vo.getTitle().contains("18")) {
-				throw new Exception("ìš•í•˜ì§€ë§ˆì„¸ìš”-ì œëª©");
-			}
+			// ºñÁî´Ï½º ·ÎÁ÷
 			
-			if(vo.getContent().contains("18")) {
-				throw new Exception("ìš•í•˜ì§€ë§ˆì„¸ìš”-ë‚´ìš©");
-			}
-			
-			// DAO í˜¸ì¶œ
+			// DAO È£Ãâ
 			SqlSession ss = getSqlSession();
-			int result = dao.insert(ss,  vo);
-
-			int attResult = 1;
-			if(attVoList.size() > 0) {
-				attResult = dao.insertBoardAttachment(ss , attVoList);
-			}
+			int result = dao.updateStoreInfor(ss,  vo);
+			int result2 = dao.insertStoreInfor(ss, vo);
 			
-			if(result * attResult >= 1) {
+			
+			if(result == 1 && result2 == 1) {
 				ss.commit();
 			}else {
 				ss.rollback();
 			}
 			ss.close();
 			
-			return result * attResult;
+			return result;
 		}
+
+
 
 }
