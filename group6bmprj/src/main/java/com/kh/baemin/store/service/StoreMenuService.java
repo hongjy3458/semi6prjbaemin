@@ -9,7 +9,13 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.kh.baemin.store.dao.StoreMenuDao;
 import com.kh.baemin.store.vo.CategoryVo;
+import com.kh.baemin.store.vo.FoodInforVo;
 
+/**
+ * 스토어 사장님 파는 음식 메뉴 관리
+ * 
+ * @author 이수인
+ */
 public class StoreMenuService {
 
 	private final StoreMenuDao dao;
@@ -50,7 +56,7 @@ public class StoreMenuService {
 	public List<CategoryVo> selectCategoryList(String storeNo) throws Exception {
 		SqlSession ss = getSqlSession();
 
-		List<CategoryVo> categoryVoList = dao.selectCategoryList(ss,storeNo);
+		List<CategoryVo> categoryVoList = dao.selectCategoryList(ss, storeNo);
 
 		ss.close();
 		System.out.println(categoryVoList);
@@ -97,6 +103,29 @@ public class StoreMenuService {
 		}
 		ss.close();
 		return result;
+	}
+
+	public int menuAdd(FoodInforVo vo) throws Exception {
+		SqlSession ss = getSqlSession();
+		int result = dao.menuAdd(ss, vo);
+		if (result == 1) {
+			ss.commit();
+		} else {
+			ss.rollback();
+		}
+		ss.close();
+		return result;
+
+	}
+
+	public List<FoodInforVo> selectMenuList(String storeNo) throws Exception {
+		SqlSession ss = getSqlSession();
+
+		List<FoodInforVo> menuVoList = dao.selectMenuList(ss, storeNo);
+
+		ss.close();
+		System.out.println(menuVoList);
+		return menuVoList;
 	}
 
 }

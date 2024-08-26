@@ -7,10 +7,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kh.baemin.store.service.StoreMenuService;
 import com.kh.baemin.store.vo.CategoryVo;
-
+/**
+ * 스토어 관리:카테고리 수정 요청
+ * 
+ * @author 이수인
+ */
 @WebServlet("/store/category_edit")
 public class StoreCategoryEditController extends HttpServlet{
 
@@ -24,14 +29,17 @@ public class StoreCategoryEditController extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			
-			//TODO StoreNo
+			HttpSession session = req.getSession();
+			
+			//세션에서 가게넘버 빼자
+			String storeNo=(String) session.getAttribute("storeNo");
+			
 			String categoryNoText=req.getParameter("categoryNoText");	
 			//뽑아내는 categoryNoText는 "checkCategoryNo-10"문자열 형태다 숫자만 뽑아내는작업 하기
 			int indexOfDash=categoryNoText.indexOf("-");
 			String no=categoryNoText.substring(indexOfDash+1);
 			String name=req.getParameter("name");
 			String viewYn=req.getParameter("viewYn");
-	System.out.println(no);
 			
 			CategoryVo vo=new CategoryVo();
 			vo.setNo(no);
@@ -39,7 +47,7 @@ public class StoreCategoryEditController extends HttpServlet{
 			vo.setViewYn(viewYn);
 		
 			//TODO StoreNo
-			vo.setStoreNo("1");
+			vo.setStoreNo("7");
 
 			 StoreMenuService sms=new StoreMenuService();;
 			int result=sms.categoryEdit(vo);
@@ -49,7 +57,7 @@ public class StoreCategoryEditController extends HttpServlet{
 			}else {
 				req.setAttribute("resultMsg", "카테고리 수정 실패!ㅜㅜ");
 			}
-			resp.sendRedirect("/app/store/category_list");
+			resp.sendRedirect("/baemin/store/category_list");
 			
 		}
 		catch(Exception e){
